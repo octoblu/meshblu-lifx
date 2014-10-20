@@ -45,7 +45,7 @@ Plugin.prototype.onMessage = function(message){
 };
 
 Plugin.prototype.onConfig = function(device){
-  self.setOptions(device.options||{});
+  this.setOptions(device.options||{});
 };
 
 Plugin.prototype.setOptions = function(options){
