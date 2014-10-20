@@ -1,0 +1,16 @@
+{
+  "name": "meshblu-lifx",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node command.js"
+  },
+  "dependencies": {
+    "lifx": "^0.2.1",
+    "skynet": "^1.1.1",
+    "tinycolor2": "^1.0.0"
+  },
+  "keywords": [
+    "meshblu-connector",
+    "gateblu"
+  ]
+}
