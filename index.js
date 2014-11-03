@@ -12,7 +12,7 @@ var MESSAGE_SCHEMA = {
   properties: {
     bulbName: {
       type: 'string,array',
-      required: false
+      required: false 
     },
     on: {
       type: 'boolean'
@@ -60,20 +60,22 @@ Plugin.prototype.setupLifx = function() {
 }
 
 Plugin.prototype.updateLifx = function(payload) {
-  var hsv, hue, sat, bri, temp, bulb;
+  var hsv, hue, sat, bri, temp, bulb, timing;
   hsv   = tinycolor(payload.color).toHsv();
-  hue   = parseInt(hsv.h * 360 * UINT16_MAX);
+  hue   = parseInt((hsv.h/360) * UINT16_MAX);
   sat   = parseInt(hsv.s * UINT16_MAX);
   bri   = parseInt(hsv.v * UINT16_MAX);
   temp = parseInt(hsv.a * MAX_KELVIN);
-  bulb  = payload.bulbName;
-
+  timing = payload.timing || 0;
+  bulb  = payload.bulbName; 
+  
   if (payload.on) {
-    this._lifx.lightsOn(bulb);
-    this._lifx.lightsColour(hue, sat, bri, temp, payload.timing, bulb);
-  } else {
+    this._lifx.lightsOn(bulb);    
+  } else if(payload.on === false) {
     this._lifx.lightsOff(bulb);
   }
+
+  this._lifx.lightsColour(hue, sat, bri, temp, timing, bulb);
 }
 
 module.exports = {
