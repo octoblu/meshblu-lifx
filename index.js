@@ -12,7 +12,6 @@ var MESSAGE_SCHEMA = {
   properties: {
     bulbName: {
       type: 'string',
-      required: false 
       required: true
     },
     on: {
@@ -20,7 +19,7 @@ var MESSAGE_SCHEMA = {
       required: true
     },
     color: {
-      type: 'string'
+      type: 'string',
       required: true
     },
     timing: {
