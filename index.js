@@ -11,7 +11,7 @@ var MESSAGE_SCHEMA = {
   type: 'object',
   properties: {
     bulbName: {
-      type: 'string,array',
+      type: 'string',
       required: false 
     },
     on: {
