@@ -13,12 +13,15 @@ var MESSAGE_SCHEMA = {
     bulbName: {
       type: 'string',
       required: false 
+      required: true
     },
     on: {
-      type: 'boolean'
+      type: 'boolean',
+      required: true
     },
     color: {
       type: 'string'
+      required: true
     },
     timing: {
       type: 'number'
