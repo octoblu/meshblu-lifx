@@ -73,9 +73,11 @@ Plugin.prototype.updateLifx = function(payload) {
   timing   = payload.timing || 0;
   bulbName = payload.bulbName;
 
-  debug('searching for bulbName', bulbName);
-  bulb = _.find(this._lifx.bulbs, {name: bulbName});
-  debug('found bulb', bulb);
+  if (bulbName !== '*') {
+    debug('searching for bulbName', bulbName);
+    bulb = _.find(this._lifx.bulbs, {name: bulbName});
+    debug('found bulb', bulb);
+  }
 
   if (payload.on === false) {
     debug('lightsOff', bulb);
