@@ -69,14 +69,13 @@ Plugin.prototype.updateLifx = function(payload) {
   bri   = parseInt(hsv.v * UINT16_MAX);
   temp = parseInt(hsv.a * MAX_KELVIN);
   timing = payload.timing || 0;
-  bulb  = payload.bulbName; 
-  
-  if (payload.on) {
-    this._lifx.lightsOn(bulb);    
-  } else if(payload.on === false) {
-    this._lifx.lightsOff(bulb);
+  bulb  = payload.bulbName;
+
+  if (payload.on === false) {
+    return this._lifx.lightsOff(bulb);
   }
 
+  this._lifx.lightsOn(bulb);
   this._lifx.lightsColour(hue, sat, bri, temp, timing, bulb);
 }
 
