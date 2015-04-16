@@ -4,6 +4,7 @@ var _ = require('lodash');
 var EventEmitter = require('events').EventEmitter;
 var lifx = require('lifx');
 var tinycolor = require('tinycolor2');
+var debug = require('debug')('meshblu-lifx')
 
 var UINT16_MAX = 65535;
 var MAX_KELVIN = 9000;
@@ -63,7 +64,7 @@ Plugin.prototype.setupLifx = function() {
 }
 
 Plugin.prototype.updateLifx = function(payload) {
-  var hsv, hue, sat, bri, temp, bulb, timing;
+  var hsv, hue, sat, bri, temp, bulb, bulbName, timing;
   hsv      = tinycolor(payload.color).toHsv();
   hue      = parseInt((hsv.h/360) * UINT16_MAX);
   sat      = parseInt(hsv.s * UINT16_MAX);
@@ -72,13 +73,18 @@ Plugin.prototype.updateLifx = function(payload) {
   timing   = payload.timing || 0;
   bulbName = payload.bulbName;
 
+  debug('searching for bulbName', bulbName);
   bulb = _.find(this._lifx.bulbs, {name: bulbName});
+  debug('found bulb', bulb);
 
   if (payload.on === false) {
+    debug('lightsOff', bulb);
     return this._lifx.lightsOff(bulb);
   }
 
+  debug('lightsOn', bulb);
   this._lifx.lightsOn(bulb);
+  debug('lightsColour', hue, sat, bri, temp, timing, bulb);
   this._lifx.lightsColour(hue, sat, bri, temp, timing, bulb);
 }
 
