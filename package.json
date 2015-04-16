@@ -1,11 +1,12 @@
 {
   "name": "meshblu-lifx",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "scripts": {
     "start": "node command.js"
   },
   "dependencies": {
     "lifx": "^0.3.1",
+    "lodash": "^3.7.0",
     "meshblu": "^1.20.0",
     "tinycolor2": "^1.0.0"
   },

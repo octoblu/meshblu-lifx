@@ -1,5 +1,6 @@
 'use strict';
 var util = require('util');
+var _ = require('lodash');
 var EventEmitter = require('events').EventEmitter;
 var lifx = require('lifx');
 var tinycolor = require('tinycolor2');
@@ -63,13 +64,15 @@ Plugin.prototype.setupLifx = function() {
 
 Plugin.prototype.updateLifx = function(payload) {
   var hsv, hue, sat, bri, temp, bulb, timing;
-  hsv   = tinycolor(payload.color).toHsv();
-  hue   = parseInt((hsv.h/360) * UINT16_MAX);
-  sat   = parseInt(hsv.s * UINT16_MAX);
-  bri   = parseInt(hsv.v * UINT16_MAX);
-  temp = parseInt(hsv.a * MAX_KELVIN);
-  timing = payload.timing || 0;
-  bulb  = payload.bulbName;
+  hsv      = tinycolor(payload.color).toHsv();
+  hue      = parseInt((hsv.h/360) * UINT16_MAX);
+  sat      = parseInt(hsv.s * UINT16_MAX);
+  bri      = parseInt(hsv.v * UINT16_MAX);
+  temp     = parseInt(hsv.a * MAX_KELVIN);
+  timing   = payload.timing || 0;
+  bulbName = payload.bulbName;
+
+  bulb = _.find(this._lifx.bulbs, {name: bulbName});
 
   if (payload.on === false) {
     return this._lifx.lightsOff(bulb);
