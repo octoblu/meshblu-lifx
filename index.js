@@ -65,6 +65,12 @@ Plugin.prototype.setupLifx = function() {
 
 Plugin.prototype.updateLifx = function(payload) {
   var hsv, hue, sat, bri, temp, bulb, bulbName, timing;
+
+  if (payload.on === false) {
+    debug('black light', bulb);
+    payload.color = 'rgba(0,0,0,0.0)';
+  }
+
   hsv      = tinycolor(payload.color).toHsv();
   hue      = parseInt((hsv.h/360) * UINT16_MAX);
   sat      = parseInt(hsv.s * UINT16_MAX);
@@ -77,11 +83,6 @@ Plugin.prototype.updateLifx = function(payload) {
     debug('searching for bulbName', bulbName);
     bulb = _.find(this._lifx.bulbs, {name: bulbName});
     debug('found bulb', bulb);
-  }
-
-  if (payload.on === false) {
-    debug('lightsOff', bulb);
-    return this._lifx.lightsOff(bulb);
   }
 
   debug('lightsOn', bulb);
