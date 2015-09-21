@@ -1,20 +1,36 @@
-sudo: false
 language: node_js
-cache:
-  bundler: true
-  directories:
-    - node_modules
-notifications:
-  flowdock: e7454f5285e7b9ab67009802d5560490
 node_js:
 - '0.10'
+before_install:
+  - npm install npm -g
+before_deploy:
+  - npm install ws browserify coffeeify
+  - mkdir -p deploy/meshblu-lifx/latest
+  - mkdir -p deploy/meshblu-lifx/$TRAVIS_TAG
+  - node_modules/.bin/browserify -t coffeeify -s Connector connector.js > deploy/meshblu-lifx/latest/meshblu-lifx.js
+  - gzip deploy/meshblu-lifx/latest/meshblu-lifx.js
+  - mv deploy/meshblu-lifx/latest/meshblu-lifx.js.gz deploy/meshblu-lifx/latest/meshblu-lifx.js
+  - cp deploy/meshblu-lifx/latest/meshblu-lifx.js deploy/meshblu-lifx/$TRAVIS_TAG/meshblu-lifx.js
 deploy:
-  provider: npm
-  skip_cleanup: true
-  clean_up: false
-  email: serveradmin@octoblu.com
-  api_key:
-    secure: g9VJjWiqKhOoGy3L9W79QeTC7cK6kO6cDYLH7OLNsR2HEB7JtPToAQdM/OOd2phSBIhNgisFtps9beFhhry9Rjpv4wO8S5abLrmlgjqc0+aSCflvJNuuWCANepR4dfOWhwu1X5Z/E+a3EJmgJZ4ADpVUk05oMJQ5UNI+M+Xl2cw=
-  on:
-    tags: true
-    all_branches: true
+  - provider: s3
+    region: us-west-2
+    skip_cleanup: true
+    detect_encoding: true
+    access_key_id: replace-me
+    secret_access_key:
+      secure: replace-me
+    bucket: octoblu-cdn
+    local-dir: deploy
+    upload-dir: js
+    on:
+      tags: true
+      all_branches: true
+  - provider: npm
+    skip_cleanup: true
+    clean_up: false
+    email: replace-me
+    api_key:
+      secure: replace-me
+    on:
+      tags: true
+      all_branches: true
