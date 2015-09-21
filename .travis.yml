@@ -18,7 +18,7 @@ deploy:
     detect_encoding: true
     access_key_id: AKIAJH2D5IPIRHYJT5IA
     secret_access_key:
-      "RUrqaCR8Qh3kYxHBsTlP8YcgwQco38xgH5N+981WUBhKwi4QxXGTGTQJ2gVvVtqAp1fm929EpraIR7f8U+m9ujNoCJTfiH8j9+DGeXNtJdBHXynZHolCCosmQybUoCW1RwpTZPAJK2zlZTzW1gqO7V7BxT4/SLdVtYimAFbtkec="
+      secure: "RUrqaCR8Qh3kYxHBsTlP8YcgwQco38xgH5N+981WUBhKwi4QxXGTGTQJ2gVvVtqAp1fm929EpraIR7f8U+m9ujNoCJTfiH8j9+DGeXNtJdBHXynZHolCCosmQybUoCW1RwpTZPAJK2zlZTzW1gqO7V7BxT4/SLdVtYimAFbtkec="
     bucket: octoblu-cdn
     local-dir: deploy
     upload-dir: js
